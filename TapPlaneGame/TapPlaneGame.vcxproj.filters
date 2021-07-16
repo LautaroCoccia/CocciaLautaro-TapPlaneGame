@@ -12,8 +12,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\objects\game_manager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\scenes\main.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\objects\game_manager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
