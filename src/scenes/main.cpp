@@ -1,11 +1,12 @@
 #include "objects/game_manager.h"
 
-using namespace TapPlaneGame;
-using namespace GameManager;
-
 int main(void)
 {
-	StartGame();
+	game_manager* GM = new game_manager();
 
+	GM->StartGame();
+
+	delete(GM);
+	
 	return 0;
 }

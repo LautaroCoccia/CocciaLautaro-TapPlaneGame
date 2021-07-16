@@ -3,12 +3,13 @@
 
 #include "raylib.h"
 
-namespace TapPlaneGame
-{
-	namespace GameManager
-	{
-		void StartGame();
-	}
-}
+class game_manager {
+
+public:
+	game_manager();
+	~game_manager();
+
+	void StartGame();
+};
 #endif
 
