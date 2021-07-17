@@ -22,10 +22,12 @@
     <ClCompile Include="..\src\objects\game_manager.cpp" />
     <ClCompile Include="..\src\scenes\main.cpp" />
     <ClCompile Include="..\src\scenes\main_menu.cpp" />
+    <ClCompile Include="..\src\scenes\scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\objects\game_manager.h" />
     <ClInclude Include="..\src\scenes\main_menu.h" />
+    <ClInclude Include="..\src\scenes\scene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

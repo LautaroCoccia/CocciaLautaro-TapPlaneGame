@@ -5,6 +5,7 @@
 Texture2D buttonTexture;
 main_menu::main_menu()
 {
+
 }
 main_menu::~main_menu()
 {
