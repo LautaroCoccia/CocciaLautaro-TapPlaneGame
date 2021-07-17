@@ -1,7 +1,7 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
-#include "scene.h"
-class main_menu : scene  
+
+class main_menu   
 {
 public:
 	main_menu();
