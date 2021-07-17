@@ -6,7 +6,7 @@ int main(void)
 
 	GM->StartGame();
 
-	delete(GM);
+	delete GM;
 	
 	return 0;
 }
