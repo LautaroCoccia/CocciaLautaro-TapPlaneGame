@@ -4,7 +4,6 @@
 class obstacles
 {
 public:
-	
 	obstacles();
 	~obstacles();
 	void Start(float xPosition, Color color);
