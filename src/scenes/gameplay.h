@@ -10,6 +10,7 @@ public:
 	void Update();
 	void Draw();
 	void Deinitialization();
+	void SetGameStateLose();
 };
 
 #endif // !GAMEPLAY_H
