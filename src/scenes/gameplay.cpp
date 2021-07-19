@@ -10,8 +10,8 @@ obstacles* obs;
 
 gameplay::gameplay()
 {
-	player1 = new player();
 	obs = new obstacles();
+	player1 = new player();
 }
 gameplay::~gameplay()
 {
@@ -21,7 +21,7 @@ gameplay::~gameplay()
 void gameplay::Start()
 {
 	player1->Start();
-	obs->Start();
+	obs->Start(0, DARKGREEN);
 }
 void gameplay::Update()
 {

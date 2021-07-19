@@ -1,61 +1,68 @@
 #include "obstacles.h"
 
-#include "raylib.h"
 #include <iostream>
 using namespace std;
-Vector2 objUpPosition;
-Vector2 objDownPosition;
 
-Rectangle recUpvisual;
-Rectangle recDownvisual;
-
-int speed = 5;
-
-float height = 100;
-float width = 100;
+const int maxObs = 3;
+struct OBSTACLE
+{
+	Rectangle recUp;
+	Rectangle recDown;
+	int speed = 100;
+	Color colorxd;
+	
+};
+OBSTACLE obs[maxObs];
 obstacles::obstacles()
 {
+
 }
 obstacles::~obstacles()
 {
 
 }
-void obstacles::Start()
+void obstacles::Start(float xPosition, Color color)
 {
-	objUpPosition.x = static_cast<float>(GetScreenWidth());
-	objUpPosition.y = 0;
+	xPosition = 0;
+	for (int i = 0; i < maxObs; i++)
+	{
+		obs[i].recUp.x = static_cast<float>(GetScreenWidth() + xPosition);
+		obs[i].recUp.y = 0;
+		obs[i].recUp.width = 45;
+		obs[i].recUp.height = 120;
 
-	objDownPosition.x = static_cast<float>(GetScreenWidth());
-	objDownPosition.y = static_cast<float>(GetScreenHeight());
+		obs[i].recDown.width = 45;
+		obs[i].recDown.height = 120;
+		obs[i].recDown.x = static_cast<float>(GetScreenWidth() + xPosition);
+		obs[i].recDown.y = static_cast<float>(GetScreenHeight() - obs[i].recDown.height);
+		obs[i].colorxd = color;
+		xPosition += 300;
+	}
 	
-	recUpvisual.width = objUpPosition.x;
-	recUpvisual.height = objUpPosition.y;
-	recUpvisual.x = width;
-	recUpvisual.y = height;
-
-	recDownvisual.width = objDownPosition.x;
-	recDownvisual.height = objDownPosition.y;
-	recDownvisual.x = width;
-	recDownvisual.y = height;
 
 }
 void obstacles::Update()
 {
-	if (objUpPosition.x > 0 && objDownPosition.x > 0)
+	for (int i = 0; i < maxObs; i++)
 	{
-		objUpPosition.x -= speed;
-		objDownPosition.x -= speed;
-	}
-	else
-	{
-		objDownPosition.x = static_cast<float>(GetScreenWidth());
-		objUpPosition.x = static_cast<float>(GetScreenWidth());
+		if (obs[i].recUp.x + obs[i].recUp.width> 0 && obs[i].recDown.x + obs[i].recDown.width > 0)
+		{
+
+			obs[i].recUp.x -= obs[i].speed * GetFrameTime();
+			obs[i].recDown.x -= obs[i].speed * GetFrameTime();
+		}
+		else
+		{
+			obs[i].recUp.x = static_cast<float>(GetScreenWidth());
+			obs[i].recDown.x = static_cast<float>(GetScreenWidth());
+		}
 	}
 }
 void obstacles::Draw()
 {
-	DrawRectangle(static_cast<int>(objUpPosition.x), static_cast<int>(objUpPosition.y), 
-		static_cast<int>(width), static_cast<int>(height), RED);
-	DrawRectangle(static_cast<int>(objDownPosition.x), static_cast<int>(objDownPosition.y - height),
-		static_cast<int>(width), static_cast<int>(height) , BLUE);
+	for (int i = 0; i < maxObs; i++)
+	{
+		DrawRectangleRec(obs[i].recUp, obs[i].colorxd);
+		DrawRectangleRec(obs[i].recDown, obs[i].colorxd);
+	}
 }

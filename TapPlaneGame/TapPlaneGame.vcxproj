@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\objects\game_manager.cpp" />
+    <ClCompile Include="..\src\objects\obstacles.cpp" />
     <ClCompile Include="..\src\objects\player.cpp" />
     <ClCompile Include="..\src\scenes\gameplay.cpp" />
     <ClCompile Include="..\src\scenes\main.cpp" />
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\objects\game_manager.h" />
+    <ClInclude Include="..\src\objects\obstacles.h" />
     <ClInclude Include="..\src\objects\player.h" />
     <ClInclude Include="..\src\scenes\gameplay.h" />
     <ClInclude Include="..\src\scenes\main_menu.h" />
