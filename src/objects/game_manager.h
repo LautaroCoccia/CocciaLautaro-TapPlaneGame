@@ -8,8 +8,8 @@ class game_manager {
 public:
 	game_manager();
 	~game_manager();
-
 	void StartGame();
+	//void SetActiveScene(scene newActivescene);
 };
 #endif
 

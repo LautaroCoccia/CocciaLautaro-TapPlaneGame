@@ -18,6 +18,13 @@ Vector2 GetMousePos();
 bool IsMouseOnScreen();
 
 Texture2D mouseImage;
+enum scene
+{
+	mainMenuScene,
+	gameplayScene
+};
+scene activeScene;
+
 game_manager::game_manager()
 {
 	mainMenu = new main_menu();
@@ -30,6 +37,7 @@ game_manager::~game_manager()
 }
 void game_manager::StartGame()
 {
+	activeScene = mainMenuScene;
 	InitGame();
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
@@ -38,6 +46,10 @@ void game_manager::StartGame()
 	}
 	Deinitialization();
 }
+//void game_manager::SetActiveScene(scene newActivescene)
+//{
+//	activeScene = newActivescene;
+//}
 void InitGame()
 {
 	// Initialization
@@ -46,18 +58,27 @@ void InitGame()
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	mouseImage = LoadTexture("Raw/UI/Mouse/tap.png");
 
-	//mainMenu->Start();
+	mainMenu->Start();
 	game->Start();
 
 }
 void Update()
 {
 	if (IsMouseOnScreen())
-		DisableCursor();
+		HideCursor();
 	else
-		EnableCursor();
-	//mainMenu->Update();
-	game->Update();
+		ShowCursor();
+	switch (activeScene)
+	{
+	case mainMenuScene:
+			mainMenu->Update();
+		break;
+	case gameplayScene:
+			game->Update();
+		break;
+	default:
+		break;
+	}
 	// Update
 	//----------------------------------------------------------------------------------
 	// TODO: Update your variables here
@@ -68,9 +89,17 @@ void Draw()
 	// Draw
 	//----------------------------------------------------------------------------------
 	BeginDrawing();
-	
-	//mainMenu->Draw();
-	game->Draw();
+	switch (activeScene)
+	{
+	case mainMenuScene:
+		mainMenu->Draw();
+		break;
+	case gameplayScene:
+		game->Draw();
+		break;
+	default:
+		break;
+	}
 	DrawTexture(mouseImage, static_cast<int>(GetMousePos().x), 
 		static_cast<int>(GetMousePos().y), WHITE);
 

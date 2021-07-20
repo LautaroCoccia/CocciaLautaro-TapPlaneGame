@@ -24,8 +24,7 @@ gameplay::gameplay()
 }
 gameplay::~gameplay()
 {
-	delete obs;
-	delete player1;
+	
 }
 void gameplay::Start()
 {
@@ -59,6 +58,10 @@ void gameplay::Update()
 		}
 		break;
 	case lose:
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			gamestate = play;
+		}
 		break;
 	default:
 		break;
@@ -67,8 +70,8 @@ void gameplay::Update()
 }
 void gameplay::Draw() 
 {
-	player1->Draw();
 	obs->Draw();
+	player1->Draw();
 	switch (gamestate)
 	{
 	case start:
@@ -88,7 +91,8 @@ void gameplay::Draw()
 }
 void gameplay::Deinitialization()
 {
-
+	delete obs;
+	delete player1;
 }
 void gameplay::SetGameStateLose()
 {
