@@ -44,9 +44,9 @@ void gameplay::Update()
 		}
 		break;
 	case play:
+		obs->Update();
 		player1->Input();
 		player1->Update();
-		obs->Update();
 		if (IsKeyPressed(KEY_P))
 		{
 			gamestate = pause;

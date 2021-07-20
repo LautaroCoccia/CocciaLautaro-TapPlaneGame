@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 
+#include "scenes/gameplay.h"
 #include "player.h"
 using namespace std;
 
@@ -10,6 +11,7 @@ const int maxObs = 3;
 
 const int minMaxPosYRange = 100;
 player player1;
+
 struct OBSTACLE
 {
 	Rectangle recMid;
@@ -36,6 +38,7 @@ obstacles::obstacles()
 }
 obstacles::~obstacles()
 {
+
 }
 void obstacles::Start(float xPosition, Color color)
 {
@@ -104,7 +107,8 @@ void CheckCollisionWithPlayer()
 		if (CheckCollisionRecs(player1.GetPlayerRectangle(), obs[i].recUp) ||
 			CheckCollisionRecs(player1.GetPlayerRectangle(), obs[i].recDown))
 		{
-
+			gameplay game;
+			game.SetGameStateLose();
 		}
 		else if (CheckCollisionRecs(player1.GetPlayerRectangle(), obs[i].recMid))
 		{
