@@ -10,6 +10,7 @@ public:
 	void Input();
 	void Update();
 	void Draw();
+	void UpdatePlayerStore();
 	Rectangle GetPlayerRectangle();
 };
 #endif // PLAYER_H

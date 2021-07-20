@@ -5,6 +5,7 @@ Vector2 position;
 
 Rectangle playerVisual;
 
+int score = 0;
 int movementUp = 0;
 
 player::player()
@@ -42,9 +43,14 @@ void player::Update()
 }
 void player::Draw()
 {
+	DrawText(FormatText("%i", score), GetScreenWidth() / 2, GetScreenHeight() / 4, 40, BLACK);
 	DrawRectangleRec(playerVisual, RED);
 }
 Rectangle player::GetPlayerRectangle()
 {
 	return playerVisual;
+}
+void player::UpdatePlayerStore()
+{
+	score++;
 }
