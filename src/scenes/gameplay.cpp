@@ -30,6 +30,7 @@ gameplay::gameplay()
 {
 	obs = new obstacles();
 	player1 = new player();
+
 }
 gameplay::~gameplay()
 {
@@ -38,15 +39,18 @@ void gameplay::Start()
 {
 	player1->Start();
 	obs->Start(0, DARKGREEN);
+
+	
 	goToMenuButtonTexture = LoadTexture("Raw/UI/Mouse/buttonLarge.png");
+	getReadyTexture = LoadTexture("Raw/UI/textGetReady.png");
+	gameOverTexture = LoadTexture("Raw/UI/textGameOver.png");
+	backgroundTexture = LoadTexture("Raw/UI/Backgrounds/background.png");
+	
 	goToMenuButtonCollider.width = static_cast<float>(goToMenuButtonTexture.width - 5);
 	goToMenuButtonCollider.height = static_cast<float>(goToMenuButtonTexture.height);
 	goToMenuButtonCollider.x = static_cast<float>(GetScreenWidth() / 2 - goToMenuButtonCollider.width / 2);
 	goToMenuButtonCollider.y = 300;
 	
-	getReadyTexture = LoadTexture("Raw/UI/textGetReady.png");
-	gameOverTexture = LoadTexture("Raw/UI/textGameOver.png");
-	backgroundTexture = LoadTexture("Raw/UI/Backgrounds/background.png");
 }
 void gameplay::Update()
 {
@@ -111,7 +115,7 @@ void gameplay::Draw()
 	{
 	case start:
 		DrawTexture(getReadyTexture, static_cast<int>(GetScreenWidth() / 2 - getReadyTexture.width/2), static_cast<int>(GetScreenHeight() / 6),WHITE);
-		DrawText("Tap to start!", 310, 200, 20, BLACK);
+		DrawText("Tap to start!", 330, 300, 20, BLACK);
 		break;
 	case play:
 		break;
@@ -144,10 +148,19 @@ void gameplay::Draw()
 void gameplay::Deinitialization()
 {
 	UnloadTexture(goToMenuButtonTexture);
+	UnloadTexture(gameOverTexture);
+	UnloadTexture(getReadyTexture);
+	UnloadTexture(backgroundTexture);
+		
 	delete obs;
 	delete player1;
 }
 void gameplay::SetGameStateLose()
 {
 	gamestate = lose;
+}
+void resetLevel()
+{
+	player1->Start();
+	obs->Start(0, DARKGREEN);
 }

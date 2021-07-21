@@ -10,8 +10,11 @@ using namespace std;
 const int maxObs = 3;
 
 const int minMaxPosYRange = 100;
-player player1;
 
+Texture2D obstacleUpTexture;
+Texture2D obstacleDownTexture;
+
+player player1;
 struct OBSTACLE
 {
 	Rectangle recMid;
@@ -38,10 +41,12 @@ obstacles::obstacles()
 }
 obstacles::~obstacles()
 {
-
+	UnloadTexture(obstacleUpTexture);
+	UnloadTexture(obstacleDownTexture);
 }
 void obstacles::Start(float xPosition, Color color)
 {
+	
 	xPosition = 0;
 	for (int i = 0; i < maxObs; i++)
 	{
@@ -63,7 +68,13 @@ void obstacles::Start(float xPosition, Color color)
 		obs[i].colorxd = color;
 		obs[i].collisionState = obs[i].noColl;
 		xPosition += 300;
+		
+		
 	}
+	obstacleUpTexture = LoadTexture("Raw/UI/Obstacles/rockGrassDown.png");
+	obstacleUpTexture.height = static_cast<int>(obstacleUpTexture.height / 1.20f);
+	obstacleDownTexture = LoadTexture("Raw/UI/Obstacles/rockGrass.png");
+	obstacleDownTexture.height = static_cast<int>(obstacleDownTexture.height / 1.20f);
 }
 void obstacles::Update()
 {
@@ -78,7 +89,7 @@ void obstacles::Update()
 		}
 		else
 		{
-			int randomPosY = 50 - (rand() % 201);
+			int randomPosY = 50 - (rand() % 150);
 			obs[i].recUp.x = static_cast<float>(GetScreenWidth());
 			obs[i].recUp.y = static_cast<float>(randomPosY);
 
@@ -94,10 +105,8 @@ void obstacles::Draw()
 {
 	for (int i = 0; i < maxObs; i++)
 	{
-		DrawRectangleRec(obs[i].recMid, BLUE);
-		DrawRectangleRec(obs[i].recUp, obs[i].colorxd);
-		DrawRectangleRec(obs[i].recDown, obs[i].colorxd);
-		
+		DrawTexture(obstacleUpTexture, static_cast<int>(obs[i].recUp.x - obstacleUpTexture.width /2.5 ), static_cast<int>(obs[i].recUp.y),WHITE);
+		DrawTexture(obstacleDownTexture, static_cast<int>(obs[i].recDown.x - obstacleUpTexture.width /2.5 ), static_cast<int>(obs[i].recDown.y),WHITE);
 	}
 }
 void CheckCollisionWithPlayer()
@@ -129,7 +138,7 @@ void CheckCollisionWithPlayer()
 				obs[i].collisionState = obs[i].scorerer; 
 				break;
 			case obs[i].scorerer:
-				player1.UpdatePlayerStore();
+				player1.UpdatePlayerScore();
 				obs[i].collisionState = obs[i].noColl;
 				break;
 			default:

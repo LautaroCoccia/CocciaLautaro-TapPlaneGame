@@ -8,7 +8,7 @@ public:
 	void Input();
 	void Update();
 	void Draw();
-	void UpdatePlayerStore();
+	void UpdatePlayerScore();
 	void Deinizialization();
 	Rectangle GetPlayerRectangle();
 };
