@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 
+#include "objects/game_manager.h"
 #include "objects/player.h"
 #include "objects/obstacles.h"
 
@@ -9,13 +10,6 @@
 player* player1;
 obstacles* obs;
 
-enum state 
-{
-	start,
-	play,
-	pause,
-	lose
-};
 state gamestate = start;
 gameplay::gameplay()
 {
@@ -60,7 +54,9 @@ void gameplay::Update()
 	case lose:
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			gamestate = play;
+			this->Start();
+			gamestate = start;
+			enumScenes = mainMenuScene;
 		}
 		break;
 	default:

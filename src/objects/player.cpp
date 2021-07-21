@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include "raylib.h"
+
 Vector2 position;
 
 Rectangle playerVisual;

@@ -5,6 +5,9 @@
 #include "scenes/main_menu.h"
 #include "scenes/gameplay.h"
 
+#include <iostream>
+
+using namespace std;
 const int screenWidth = 800;
 const int screenHeight = 450;
 
@@ -18,12 +21,8 @@ Vector2 GetMousePos();
 bool IsMouseOnScreen();
 
 Texture2D mouseImage;
-enum scene
-{
-	mainMenuScene,
-	gameplayScene
-};
-scene activeScene;
+
+scenes enumScenes;
 
 game_manager::game_manager()
 {
@@ -33,11 +32,10 @@ game_manager::game_manager()
 game_manager::~game_manager()
 {
 	delete game;
-	delete mainMenu;
 }
 void game_manager::StartGame()
 {
-	activeScene = mainMenuScene;
+	enumScenes = mainMenuScene;
 	InitGame();
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
@@ -46,10 +44,11 @@ void game_manager::StartGame()
 	}
 	Deinitialization();
 }
-//void game_manager::SetActiveScene(scene newActivescene)
-//{
-//	activeScene = newActivescene;
-//}
+void game_manager::SetActiveScene(scenes newActivescene)
+{
+	enumScenes = newActivescene;
+	cout << "Escena: " << enumScenes << endl;
+}
 void InitGame()
 {
 	// Initialization
@@ -68,9 +67,10 @@ void Update()
 		HideCursor();
 	else
 		ShowCursor();
-	switch (activeScene)
+	switch (enumScenes)
 	{
 	case mainMenuScene:
+
 			mainMenu->Update();
 		break;
 	case gameplayScene:
@@ -89,7 +89,7 @@ void Draw()
 	// Draw
 	//----------------------------------------------------------------------------------
 	BeginDrawing();
-	switch (activeScene)
+	switch (enumScenes)
 	{
 	case mainMenuScene:
 		mainMenu->Draw();
@@ -108,15 +108,17 @@ void Draw()
 
 	ClearBackground(RAYWHITE);
 
-	/*DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);*/
-
 	EndDrawing();
 	//----------------------------------------------------------------------------------
 }
 void Deinitialization()
 {
-	//mainMenu->Deinitialization();
 	game->Deinitialization();
+	if (mainMenu != NULL)
+	{
+		mainMenu->Deinitialization();
+		delete mainMenu;
+	}
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
 	CloseWindow();        // Close window and OpenGL context

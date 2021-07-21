@@ -1,6 +1,14 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
+enum state
+{
+	start,
+	play,
+	pause,
+	lose
+};
+extern state gamestate;
 class gameplay
 {
 public:
