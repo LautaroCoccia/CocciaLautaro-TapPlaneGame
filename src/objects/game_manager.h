@@ -18,4 +18,3 @@ public:
 	void SetActiveScene(scenes newActivescene);
 };
 #endif
-

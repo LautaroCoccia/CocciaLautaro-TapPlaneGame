@@ -31,7 +31,7 @@ game_manager::game_manager()
 }
 game_manager::~game_manager()
 {
-	delete game;
+
 }
 void game_manager::StartGame()
 {
@@ -113,7 +113,11 @@ void Draw()
 }
 void Deinitialization()
 {
-	game->Deinitialization();
+	if (game != NULL)
+	{
+		game->Deinitialization();
+		delete game;
+	}
 	if (mainMenu != NULL)
 	{
 		mainMenu->Deinitialization();

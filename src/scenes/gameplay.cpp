@@ -10,6 +10,21 @@
 player* player1;
 obstacles* obs;
 
+Texture2D goToMenuButtonTexture;
+Rectangle goToMenuButtonCollider;
+
+Texture2D backgroundTexture;
+
+Texture2D getReadyTexture;
+Texture2D gameOverTexture;
+enum buttonState
+{
+	up,
+	mouseOver,
+	down
+};
+buttonState actualButtonState;
+
 state gamestate = start;
 gameplay::gameplay()
 {
@@ -18,13 +33,20 @@ gameplay::gameplay()
 }
 gameplay::~gameplay()
 {
-	
 }
 void gameplay::Start()
 {
 	player1->Start();
 	obs->Start(0, DARKGREEN);
+	goToMenuButtonTexture = LoadTexture("Raw/UI/Mouse/buttonLarge.png");
+	goToMenuButtonCollider.width = static_cast<float>(goToMenuButtonTexture.width - 5);
+	goToMenuButtonCollider.height = static_cast<float>(goToMenuButtonTexture.height);
+	goToMenuButtonCollider.x = static_cast<float>(GetScreenWidth() / 2 - goToMenuButtonCollider.width / 2);
+	goToMenuButtonCollider.y = 300;
 	
+	getReadyTexture = LoadTexture("Raw/UI/textGetReady.png");
+	gameOverTexture = LoadTexture("Raw/UI/textGameOver.png");
+	backgroundTexture = LoadTexture("Raw/UI/Backgrounds/background.png");
 }
 void gameplay::Update()
 {
@@ -52,12 +74,28 @@ void gameplay::Update()
 		}
 		break;
 	case lose:
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		if (CheckCollisionPointRec(GetMousePosition(), goToMenuButtonCollider))
 		{
-			this->Start();
-			gamestate = start;
-			enumScenes = mainMenuScene;
+			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+			{
+				actualButtonState = down;
+			}
+			else if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && actualButtonState == down)
+			{
+				enumScenes = gameplayScene;
+				actualButtonState = up;
+				this->Start();
+				gamestate = start;
+				enumScenes = mainMenuScene;
+			}
+			else
+			{
+				actualButtonState = mouseOver;
+			}
 		}
+		else
+			actualButtonState = up;
+	
 		break;
 	default:
 		break;
@@ -66,11 +104,13 @@ void gameplay::Update()
 }
 void gameplay::Draw() 
 {
+	DrawTexture(backgroundTexture, 0,0, WHITE);
 	obs->Draw();
 	player1->Draw();
 	switch (gamestate)
 	{
 	case start:
+		DrawTexture(getReadyTexture, static_cast<int>(GetScreenWidth() / 2 - getReadyTexture.width/2), static_cast<int>(GetScreenHeight() / 6),WHITE);
 		DrawText("Tap to start!", 310, 200, 20, BLACK);
 		break;
 	case play:
@@ -79,7 +119,23 @@ void gameplay::Draw()
 		DrawText("Pause!", GetScreenWidth() /2 , 200, 20, BLACK);
 		break;
 	case lose:
-		DrawText("YOU LOSE!", GetScreenWidth() /2 , 200, 20, BLACK);
+		DrawTexture(gameOverTexture, static_cast<int>(GetScreenWidth() / 2 - gameOverTexture.width / 2), static_cast<int>(GetScreenHeight() / 6), WHITE);
+		switch (actualButtonState)
+		{
+		case up:
+			DrawTexture(goToMenuButtonTexture, 300, static_cast<int>(goToMenuButtonCollider.y), WHITE);
+			break;
+		case mouseOver:
+			DrawTexture(goToMenuButtonTexture, 300, static_cast<int>(goToMenuButtonCollider.y), YELLOW);
+			break;
+		case down:
+			DrawTexture(goToMenuButtonTexture, 300, static_cast<int>(goToMenuButtonCollider.y), GREEN);
+			break;
+		default:
+			break;
+		}
+
+		DrawText("MAIN MENU!", (GetScreenWidth() /2 -90) , static_cast<int>(goToMenuButtonCollider.y) +15, 30, BLACK);
 		break;
 	default:
 		break;
@@ -87,6 +143,7 @@ void gameplay::Draw()
 }
 void gameplay::Deinitialization()
 {
+	UnloadTexture(goToMenuButtonTexture);
 	delete obs;
 	delete player1;
 }
