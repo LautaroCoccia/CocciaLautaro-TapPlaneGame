@@ -37,7 +37,8 @@ void game_manager::StartGame()
 {
 	enumScenes = mainMenuScene;
 	InitGame();
-	while (!WindowShouldClose())    // Detect window close button or ESC key
+	
+	while ( (enumScenes !=quitGame && !WindowShouldClose()))    // Detect window close button or ESC key
 	{
 		Update();
 		Draw();
@@ -123,6 +124,7 @@ void Deinitialization()
 		mainMenu->Deinitialization();
 		delete mainMenu;
 	}
+	UnloadTexture(mouseImage);
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
 	CloseWindow();        // Close window and OpenGL context

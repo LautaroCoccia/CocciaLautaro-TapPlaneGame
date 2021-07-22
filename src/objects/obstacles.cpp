@@ -41,40 +41,43 @@ obstacles::obstacles()
 }
 obstacles::~obstacles()
 {
-	UnloadTexture(obstacleUpTexture);
-	UnloadTexture(obstacleDownTexture);
+	
 }
-void obstacles::Start(float xPosition, Color color)
+void obstacles::Start()
 {
 	
-	xPosition = 0;
+	Restart();
+	obstacleUpTexture = LoadTexture("Raw/UI/Obstacles/rockGrassDown.png");
+	obstacleUpTexture.height = static_cast<int>(obstacleUpTexture.height / 1.20f);
+	obstacleDownTexture = LoadTexture("Raw/UI/Obstacles/rockGrass.png");
+	obstacleDownTexture.height = static_cast<int>(obstacleDownTexture.height / 1.20f);
+}
+void obstacles::Restart()
+{
+	float xPosition = 0;
 	for (int i = 0; i < maxObs; i++)
 	{
 		obs[i].recUp.x = static_cast<float>(GetScreenWidth() + xPosition);
 		obs[i].recUp.height = 200;
 		obs[i].recUp.width = 45;
-		obs[i].recUp.y = 0 - obs[i].recUp.height/4;
+		obs[i].recUp.y = 0 - obs[i].recUp.height / 4;
 
 		obs[i].recDown.width = 45;
 		obs[i].recDown.height = 200;
 		obs[i].recDown.x = static_cast<float>(GetScreenWidth() + xPosition);
-		obs[i].recDown.y = static_cast<float>(GetScreenHeight() - obs[i].recDown.height/1.25);
+		obs[i].recDown.y = static_cast<float>(GetScreenHeight() - obs[i].recDown.height / 1.25);
 
 		obs[i].recMid.width = 60;
 		obs[i].recMid.height = obs[i].recDown.y - obs[i].recUp.height + (obs[i].recUp.y * -1);
 		obs[i].recMid.x = static_cast<float>(GetScreenWidth() + xPosition);
-		obs[i].recMid.y =  obs[i].recUp.height +obs[i].recUp.y;
+		obs[i].recMid.y = obs[i].recUp.height + obs[i].recUp.y;
 
-		obs[i].colorxd = color;
+		obs[i].colorxd = WHITE;
 		obs[i].collisionState = obs[i].noColl;
 		xPosition += 300;
-		
-		
+
+
 	}
-	obstacleUpTexture = LoadTexture("Raw/UI/Obstacles/rockGrassDown.png");
-	obstacleUpTexture.height = static_cast<int>(obstacleUpTexture.height / 1.20f);
-	obstacleDownTexture = LoadTexture("Raw/UI/Obstacles/rockGrass.png");
-	obstacleDownTexture.height = static_cast<int>(obstacleDownTexture.height / 1.20f);
 }
 void obstacles::Update()
 {
@@ -108,6 +111,11 @@ void obstacles::Draw()
 		DrawTexture(obstacleUpTexture, static_cast<int>(obs[i].recUp.x - obstacleUpTexture.width /2.5 ), static_cast<int>(obs[i].recUp.y),WHITE);
 		DrawTexture(obstacleDownTexture, static_cast<int>(obs[i].recDown.x - obstacleUpTexture.width /2.5 ), static_cast<int>(obs[i].recDown.y),WHITE);
 	}
+}
+void obstacles::Deinitialization()
+{
+	UnloadTexture(obstacleDownTexture);
+	UnloadTexture(obstacleUpTexture);
 }
 void CheckCollisionWithPlayer()
 {

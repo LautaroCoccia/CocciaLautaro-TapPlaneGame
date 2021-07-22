@@ -12,6 +12,10 @@ Texture2D playerTexture;
 void player::Start() 
 {
 	playerTexture = LoadTexture("Raw/UI/Player/planeRed2.png");
+	
+}
+void player::Restart()
+{
 	playerTexture.height = playerTexture.height / 2;
 	playerTexture.width = playerTexture.width / 2;
 	playerVisual.height = 40;
@@ -47,9 +51,9 @@ void player::UpdatePlayerScore()
 {
 	score++;
 }
-void Deinizialization()
+void player::Deinitialization()
 {
-
+	UnloadTexture(playerTexture);
 }
 Rectangle player::GetPlayerRectangle()
 {

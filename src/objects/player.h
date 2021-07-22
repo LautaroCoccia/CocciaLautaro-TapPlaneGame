@@ -5,11 +5,12 @@ class player
 {
 public:
 	void Start();
+	void Restart();
 	void Input();
 	void Update();
 	void Draw();
 	void UpdatePlayerScore();
-	void Deinizialization();
+	void Deinitialization();
 	Rectangle GetPlayerRectangle();
 };
 #endif // PLAYER_H

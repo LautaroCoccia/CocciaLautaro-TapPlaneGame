@@ -28,7 +28,7 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\objects\obstacles.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,7 +45,7 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\objects\obstacles.h">
-      <Filter>Scenes</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

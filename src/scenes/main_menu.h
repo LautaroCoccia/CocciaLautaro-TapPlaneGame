@@ -7,6 +7,7 @@ public:
 	main_menu();
 	~main_menu();
 	void Start();
+	void Restart();
 	void Update();
 	void Draw();
 	void Deinitialization();

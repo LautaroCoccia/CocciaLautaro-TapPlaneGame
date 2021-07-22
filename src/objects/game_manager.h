@@ -5,7 +5,8 @@
 enum scenes
 {
 	mainMenuScene,
-	gameplayScene
+	gameplayScene,
+	quitGame
 };
 extern scenes enumScenes;
 

@@ -6,9 +6,11 @@ class obstacles
 public:
 	obstacles();
 	~obstacles();
-	void Start(float xPosition, Color color);
+	void Start();
+	void Restart();
 	void Update();
 	void Draw();
+	void Deinitialization();
 };
 #endif
 

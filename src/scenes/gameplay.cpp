@@ -38,19 +38,24 @@ gameplay::~gameplay()
 void gameplay::Start()
 {
 	player1->Start();
-	obs->Start(0, DARKGREEN);
+	obs->Start();
 
-	
 	goToMenuButtonTexture = LoadTexture("Raw/UI/Mouse/buttonLarge.png");
 	getReadyTexture = LoadTexture("Raw/UI/textGetReady.png");
 	gameOverTexture = LoadTexture("Raw/UI/textGameOver.png");
 	backgroundTexture = LoadTexture("Raw/UI/Backgrounds/background.png");
-	
+
 	goToMenuButtonCollider.width = static_cast<float>(goToMenuButtonTexture.width - 5);
 	goToMenuButtonCollider.height = static_cast<float>(goToMenuButtonTexture.height);
 	goToMenuButtonCollider.x = static_cast<float>(GetScreenWidth() / 2 - goToMenuButtonCollider.width / 2);
 	goToMenuButtonCollider.y = 300;
-	
+
+	Restart();
+}
+void gameplay::Restart()
+{
+	player1->Restart();
+	obs->Restart();
 }
 void gameplay::Update()
 {
@@ -88,7 +93,7 @@ void gameplay::Update()
 			{
 				enumScenes = gameplayScene;
 				actualButtonState = up;
-				this->Start();
+				this->Restart();
 				gamestate = start;
 				enumScenes = mainMenuScene;
 			}
@@ -133,7 +138,7 @@ void gameplay::Draw()
 			DrawTexture(goToMenuButtonTexture, 300, static_cast<int>(goToMenuButtonCollider.y), YELLOW);
 			break;
 		case down:
-			DrawTexture(goToMenuButtonTexture, 300, static_cast<int>(goToMenuButtonCollider.y), GREEN);
+			DrawTexture(goToMenuButtonTexture, 300, static_cast<int>(goToMenuButtonCollider.y), BEIGE);
 			break;
 		default:
 			break;
@@ -147,20 +152,16 @@ void gameplay::Draw()
 }
 void gameplay::Deinitialization()
 {
-	UnloadTexture(goToMenuButtonTexture);
+	UnloadTexture(backgroundTexture);
 	UnloadTexture(gameOverTexture);
 	UnloadTexture(getReadyTexture);
-	UnloadTexture(backgroundTexture);
-		
+	UnloadTexture(goToMenuButtonTexture);
+	obs->Deinitialization();
+	player1->Deinitialization();
 	delete obs;
 	delete player1;
 }
 void gameplay::SetGameStateLose()
 {
 	gamestate = lose;
-}
-void resetLevel()
-{
-	player1->Start();
-	obs->Start(0, DARKGREEN);
 }

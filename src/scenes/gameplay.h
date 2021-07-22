@@ -15,6 +15,7 @@ public:
 	gameplay();
 	~gameplay();
 	void Start();
+	void Restart();
 	void Update();
 	void Draw();
 	void Deinitialization();
