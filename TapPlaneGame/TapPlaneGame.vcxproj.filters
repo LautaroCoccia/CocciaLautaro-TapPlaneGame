@@ -24,10 +24,10 @@
     <ClCompile Include="..\src\scenes\gameplay.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\objects\player.cpp">
+    <ClCompile Include="..\src\objects\obstacles.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\objects\obstacles.cpp">
+    <ClCompile Include="..\src\objects\player.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,10 +41,10 @@
     <ClInclude Include="..\src\scenes\gameplay.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\objects\player.h">
+    <ClInclude Include="..\src\objects\obstacles.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\objects\obstacles.h">
+    <ClInclude Include="..\src\objects\player.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

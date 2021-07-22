@@ -10,6 +10,9 @@ Texture2D playButtonTexture;
 Texture2D quitButtonTexture;
 Rectangle playButtonCollider;
 Rectangle quitButtonCollider;
+
+Font fontTtf;
+Vector2 tittleTextPosition;
 enum buttonState
 {
 	up,
@@ -27,6 +30,8 @@ main_menu::~main_menu()
 }
 void main_menu::Start()
 {
+	fontTtf = LoadFontEx("Assets/Font/kenvector_future.ttf", 32, 0, 250);
+	tittleTextPosition = { static_cast<float>(GetScreenWidth() / 7), static_cast<float>(GetScreenHeight() / 6) };
 	background = LoadTexture("Raw/UI/Backgrounds/background.png");
 	playButtonTexture = LoadTexture("Raw/UI/Mouse/buttonLarge.png");
 	quitButtonTexture = LoadTexture("Raw/UI/Mouse/buttonSmall.png");
@@ -50,6 +55,7 @@ void main_menu::Restart()
 
 void main_menu::Update()
 {
+	
 	if (CheckCollisionPointRec(GetMousePosition(), playButtonCollider))
 	{
 		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
@@ -114,18 +120,18 @@ void main_menu::Draw()
 		DrawTexture(quitButtonTexture, static_cast<int>(GetScreenWidth() / 2 - quitButtonTexture.width / 2), 300, YELLOW);
 		break;
 	case down:
-		DrawTexture(quitButtonTexture, static_cast<int>(GetScreenWidth()/2 -quitButtonTexture.width/2), 300, BEIGE);
+		DrawTexture(quitButtonTexture, static_cast<int>(GetScreenWidth() / 2 - quitButtonTexture.width / 2), 300, BEIGE);
 		break;
 	default:
 		break;
 	}
-
 	DrawText("QUIT", static_cast<int>(GetScreenWidth() / 2)-45, 320, 40,BLACK);
 	DrawText("PLAY", 350, 210, 40, BLACK);
-
+	DrawTextEx(fontTtf, "TAP PLANE GAME", tittleTextPosition, 60, 2, BLACK);
 }
 void main_menu::Deinitialization()
 {
+	UnloadFont(fontTtf);
 	UnloadTexture(background);
 	UnloadTexture(quitButtonTexture);
 	UnloadTexture(playButtonTexture);

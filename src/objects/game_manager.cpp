@@ -106,6 +106,7 @@ void Draw()
 
 	DrawLine(0, GetScreenHeight() / 2, GetScreenWidth(), GetScreenHeight() / 2, GREEN);
 	DrawLine(GetScreenWidth() / 2, 0, GetScreenWidth() / 2, GetScreenHeight(), GREEN);
+	DrawText("v0.13", 1, static_cast<int>(GetScreenHeight() - 30), 30, BLACK);
 
 	ClearBackground(RAYWHITE);
 

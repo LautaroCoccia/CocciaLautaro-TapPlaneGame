@@ -11,6 +11,7 @@ public:
 	void Draw();
 	void UpdatePlayerScore();
 	void Deinitialization();
+	int GetScore();
 	Rectangle GetPlayerRectangle();
 };
 #endif // PLAYER_H

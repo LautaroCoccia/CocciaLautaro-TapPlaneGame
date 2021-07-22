@@ -20,7 +20,7 @@ struct OBSTACLE
 	Rectangle recMid;
 	Rectangle recUp;
 	Rectangle recDown;
-	int speed = 150;
+	int speed = 200;
 	Color colorxd;
 	enum collision
 	{
@@ -30,6 +30,8 @@ struct OBSTACLE
 	};
 	collision collisionState;
 };
+float rectangleWidth = 45;
+float rectangleHeight =200;
 
 OBSTACLE obs[maxObs];
 
@@ -58,12 +60,12 @@ void obstacles::Restart()
 	for (int i = 0; i < maxObs; i++)
 	{
 		obs[i].recUp.x = static_cast<float>(GetScreenWidth() + xPosition);
-		obs[i].recUp.height = 200;
-		obs[i].recUp.width = 45;
+		obs[i].recUp.width = rectangleWidth;
+		obs[i].recUp.height = rectangleHeight;
 		obs[i].recUp.y = 0 - obs[i].recUp.height / 4;
 
-		obs[i].recDown.width = 45;
-		obs[i].recDown.height = 200;
+		obs[i].recDown.width = rectangleWidth;
+		obs[i].recDown.height = rectangleHeight;
 		obs[i].recDown.x = static_cast<float>(GetScreenWidth() + xPosition);
 		obs[i].recDown.y = static_cast<float>(GetScreenHeight() - obs[i].recDown.height / 1.25);
 
@@ -75,8 +77,6 @@ void obstacles::Restart()
 		obs[i].colorxd = WHITE;
 		obs[i].collisionState = obs[i].noColl;
 		xPosition += 300;
-
-
 	}
 }
 void obstacles::Update()
