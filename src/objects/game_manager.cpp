@@ -5,144 +5,176 @@
 #include "scenes/main_menu.h"
 #include "scenes/gameplay.h"
 
-#include <iostream>
+using namespace TapGamePlane;
 
-using namespace std;
-const int screenWidth = 800;
-const int screenHeight = 450;
-
-main_menu* mainMenu;
-gameplay* game;
-void InitGame();
-void Update();
-void Draw();
-void Deinitialization();
-Vector2 GetMousePos();
-bool IsMouseOnScreen();
-
-Texture2D mouseImage;
-
-scenes enumScenes;
-
-game_manager::game_manager()
-{
-	mainMenu = new main_menu();
-	game = new gameplay();
-}
-game_manager::~game_manager()
+namespace TapGamePlane
 {
 
-}
-void game_manager::StartGame()
-{
-	enumScenes = mainMenuScene;
-	InitGame();
+	const int screenWidth = 800;
+	const int screenHeight = 450;
 	
-	while ( (enumScenes !=quitGame && !WindowShouldClose()))    // Detect window close button or ESC key
+	main_menu* mainMenu;
+	gameplay* game;
+	void InitGame();
+	void Update();
+	void Draw();
+	void Deinitialization();
+	Vector2 GetMousePos();
+	bool IsMouseOnScreen();
+	
+	
+	enum mouseFrame
 	{
-		Update();
-		Draw();
-	}
-	Deinitialization();
-}
-void game_manager::SetActiveScene(scenes newActivescene)
-{
-	enumScenes = newActivescene;
-	cout << "Escena: " << enumScenes << endl;
-}
-void InitGame()
-{
-	// Initialization
-	//--------------------------------------------------------------------------------------
-	InitWindow(screenWidth, screenHeight, "Coccia Lautaro - Tap plane game");
-	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-	mouseImage = LoadTexture("Raw/UI/Mouse/tap.png");
-
-	mainMenu->Start();
-	game->Start();
-
-}
-void Update()
-{
-	if (IsMouseOnScreen())
-		HideCursor();
-	else
-		ShowCursor();
-	switch (enumScenes)
+		idle,
+		click
+	};
+	mouseFrame actualMouseFrame;
+	
+	scenes enumScenes;
+	
+	Texture2D mouseTexture;
+	Rectangle mouseFrameRec;
+	Vector2 mouseTexturePosition;
+	
+	game_manager::game_manager()
 	{
-	case mainMenuScene:
-
-			mainMenu->Update();
-		break;
-	case gameplayScene:
-			game->Update();
-		break;
-	default:
-		break;
+		mainMenu = new main_menu();
+		game = new gameplay();
 	}
-	// Update
-	//----------------------------------------------------------------------------------
-	// TODO: Update your variables here
-	//----------------------------------------------------------------------------------
-}
-void Draw()
-{
-	// Draw
-	//----------------------------------------------------------------------------------
-	BeginDrawing();
-	switch (enumScenes)
+	game_manager::~game_manager()
 	{
-	case mainMenuScene:
-		mainMenu->Draw();
-		break;
-	case gameplayScene:
-		game->Draw();
-		break;
-	default:
-		break;
+	
 	}
-	DrawTexture(mouseImage, static_cast<int>(GetMousePos().x), 
-		static_cast<int>(GetMousePos().y), WHITE);
-
-	DrawLine(0, GetScreenHeight() / 2, GetScreenWidth(), GetScreenHeight() / 2, GREEN);
-	DrawLine(GetScreenWidth() / 2, 0, GetScreenWidth() / 2, GetScreenHeight(), GREEN);
-	DrawText("v0.13", 1, static_cast<int>(GetScreenHeight() - 30), 30, BLACK);
-
-	ClearBackground(RAYWHITE);
-
-	EndDrawing();
-	//----------------------------------------------------------------------------------
-}
-void Deinitialization()
-{
-	if (game != NULL)
+	void game_manager::StartGame()
 	{
-		game->Deinitialization();
-		delete game;
-	}
-	if (mainMenu != NULL)
-	{
-		mainMenu->Deinitialization();
-		delete mainMenu;
-	}
-	UnloadTexture(mouseImage);
-	// De-Initialization
-	//--------------------------------------------------------------------------------------
-	CloseWindow();        // Close window and OpenGL context
-	//--------------------------------------------------------------------------------------
-}
-
-Vector2 GetMousePos()
-{
-	Vector2 mousePosVec = { GetMousePosition().x - mouseImage.width / 2,
-		GetMousePosition().y - mouseImage.height / 2 };
-	return mousePosVec;
-}
-
-bool IsMouseOnScreen()
-{
-	return ((GetMousePosition().x > 0 && GetMousePosition().x < GetScreenWidth()) &&
-		GetMousePosition().y > 0 && GetMousePosition().y < GetScreenHeight());
+		enumScenes = mainMenuScene;
+		actualMouseFrame = idle;
+		InitGame();
 		
+		while ( (enumScenes !=quitGame && !WindowShouldClose()))    // Detect window close button or ESC key
+		{
+			Update();
+			Draw();
+		}
+		Deinitialization();
+	}
+	void game_manager::SetActiveScene(scenes newActivescene)
+	{
+		enumScenes = newActivescene;
+	}
+	void InitGame()
+	{
+		// Initialization
+		//--------------------------------------------------------------------------------------
+		InitWindow(screenWidth, screenHeight, "Coccia Lautaro - Tap plane game");
+		SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+	
+		mouseTexture = LoadTexture("Assets/UI/Mouse/MouseTap.png");
+	
+		mouseFrameRec = { 0,0,static_cast<float>(mouseTexture.width / 2), static_cast<float>(mouseTexture.height) };
+		mainMenu->Start();
+		game->Start();
+	}
+	void Update()
+	{
+		// Update
+		//----------------------------------------------------------------------------------
+		// TODO: Update your variables here
+		//----------------------------------------------------------------------------------
+		mouseTexturePosition = { GetMousePos().x + mouseTexture.width / 4,GetMousePos().y + mouseTexture.height / 4 };
+	
+		if (IsMouseButtonUp(MOUSE_LEFT_BUTTON))
+			actualMouseFrame = idle;
+		else
+			actualMouseFrame = click;
+		
+		switch (actualMouseFrame)
+		{
+		case idle:
+			mouseFrameRec.x = static_cast<float>(0 * mouseTexture.width / 2 );
+			break;
+		case click:
+			mouseFrameRec.x = static_cast<float>(1 * mouseTexture.width / 2 );
+			break;
+		default:
+			break;
+		}
+	
+		if (IsMouseOnScreen())
+			HideCursor();
+		else
+			ShowCursor();
+		switch (enumScenes)
+		{
+		case mainMenuScene:
+	
+				mainMenu->Update();
+			break;
+		case gameplayScene:
+				game->Update();
+			break;
+		default:
+			break;
+		}
+	}
+	void Draw()
+	{
+		// Draw
+		//----------------------------------------------------------------------------------
+		BeginDrawing();
+		switch (enumScenes)
+		{
+		case mainMenuScene:
+			mainMenu->Draw();
+			break;
+		case gameplayScene:
+			game->Draw();
+			break;
+		default:
+			break;
+		}
+		DrawTextureRec(mouseTexture, mouseFrameRec, mouseTexturePosition, WHITE);
+	
+		DrawText("v0.13", 1, static_cast<int>(GetScreenHeight() - 20), 20, BLACK);
+		DrawText("Tappy Plane assets by Kenney", static_cast<int>(GetScreenWidth()/3.5), static_cast<int>(GetScreenHeight() - 25), 20, BLACK);
+	
+		ClearBackground(RAYWHITE);
+	
+		EndDrawing();
+		//----------------------------------------------------------------------------------
+	}
+	void Deinitialization()
+	{
+		if (game != NULL)
+		{
+			game->Deinitialization();
+			delete game;
+		}
+		if (mainMenu != NULL)
+		{
+			mainMenu->Deinitialization();
+			delete mainMenu;
+		}
+		UnloadTexture(mouseTexture);
+		// De-Initialization
+		//--------------------------------------------------------------------------------------
+		CloseWindow();        // Close window and OpenGL context
+		//--------------------------------------------------------------------------------------
+	}
+	
+	Vector2 GetMousePos()
+	{
+		Vector2 mousePosVec = { GetMousePosition().x - mouseTexture.width / 2,
+			GetMousePosition().y - mouseTexture.height / 2 };
+		return mousePosVec;
+	}
+	
+	bool IsMouseOnScreen()
+	{
+		return ((GetMousePosition().x > 0 && GetMousePosition().x < GetScreenWidth()) &&
+			GetMousePosition().y > 0 && GetMousePosition().y < GetScreenHeight());
+			
+	
+}
 }
 
