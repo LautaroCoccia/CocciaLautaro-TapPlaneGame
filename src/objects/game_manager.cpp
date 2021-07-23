@@ -22,7 +22,8 @@ namespace TapGamePlane
 	Vector2 GetMousePos();
 	bool IsMouseOnScreen();
 	
-	
+	Sound mouseClickSound;
+	Sound mouseReleaseSound;
 	enum mouseFrame
 	{
 		idle,
@@ -69,8 +70,12 @@ namespace TapGamePlane
 		InitWindow(screenWidth, screenHeight, "Coccia Lautaro - Tap plane game");
 		SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	
+		InitAudioDevice();
+
 		mouseTexture = LoadTexture("Assets/UI/Mouse/MouseTap.png");
-	
+		mouseClickSound = LoadSound("Assets/Audio/ClickSounds/mouseclick1.ogg");
+		mouseReleaseSound = LoadSound("Assets/Audio/ClickSounds/mouserelease1.ogg");
+
 		mouseFrameRec = { 0,0,static_cast<float>(mouseTexture.width / 2), static_cast<float>(mouseTexture.height) };
 		mainMenu->Start();
 		game->Start();
@@ -83,10 +88,17 @@ namespace TapGamePlane
 		//----------------------------------------------------------------------------------
 		mouseTexturePosition = { GetMousePos().x + mouseTexture.width / 4,GetMousePos().y + mouseTexture.height / 4 };
 	
-		if (IsMouseButtonUp(MOUSE_LEFT_BUTTON))
+		if ( IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			PlaySound(mouseClickSound);
 			actualMouseFrame = idle;
-		else
+		}
+		else if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			PlaySound(mouseReleaseSound);
 			actualMouseFrame = click;
+
+		}
 		
 		switch (actualMouseFrame)
 		{
@@ -155,7 +167,11 @@ namespace TapGamePlane
 			mainMenu->Deinitialization();
 			delete mainMenu;
 		}
+		UnloadSound(mouseReleaseSound);
+		UnloadSound(mouseClickSound);
 		UnloadTexture(mouseTexture);
+
+		CloseAudioDevice();
 		// De-Initialization
 		//--------------------------------------------------------------------------------------
 		CloseWindow();        // Close window and OpenGL context
