@@ -147,8 +147,8 @@ namespace TapGamePlane
 		}
 		DrawTextureRec(mouseTexture, mouseFrameRec, mouseTexturePosition, WHITE);
 	
-		DrawText("v0.13", 1, static_cast<int>(GetScreenHeight() - 20), 20, BLACK);
-		DrawText("Tappy Plane assets by Kenney", static_cast<int>(GetScreenWidth()/3.5), static_cast<int>(GetScreenHeight() - 25), 20, BLACK);
+		DrawText("v0.14", 1, static_cast<int>(GetScreenHeight() - 20), 20, BLACK);
+		DrawText("Tappy Plane assets, font & click sounds by Kenney", static_cast<int>(GetScreenWidth()/5), static_cast<int>(GetScreenHeight() - 25), 20, BLACK);
 	
 		ClearBackground(RAYWHITE);
 	

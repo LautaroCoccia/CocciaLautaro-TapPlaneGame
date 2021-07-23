@@ -30,11 +30,12 @@ namespace TapGamePlane
 	buttonState actualButtonState;
 
 	state gamestate = start;
+
+	Music loopMusic;
 	gameplay::gameplay()
 	{
 		obs = new obstacles();
 		player1 = new player();
-
 	}
 	gameplay::~gameplay()
 	{
@@ -45,11 +46,14 @@ namespace TapGamePlane
 		player1->Start();
 		obs->Start();
 
+
 		goToMenuButtonTexture = LoadTexture("Assets/UI/Buttons/buttonLarge.png");
 		getReadyTexture = LoadTexture("Assets/UI/textGetReady.png");
 		gameOverTexture = LoadTexture("Assets/UI/textGameOver.png");
 		backgroundTexture = LoadTexture("Assets/UI/Background/background.png");
 
+		loopMusic = LoadMusicStream("Assets/Audio/Music/MusicLoop.ogg");
+		
 		goToMenuButtonCollider.width = static_cast<float>(goToMenuButtonTexture.width);
 		goToMenuButtonCollider.height = static_cast<float>(goToMenuButtonTexture.height);
 		goToMenuButtonCollider.x = static_cast<float>(GetScreenWidth() / 2 - goToMenuButtonCollider.width / 2);
@@ -64,11 +68,14 @@ namespace TapGamePlane
 	}
 	void gameplay::Update()
 	{
+		UpdateMusicStream(loopMusic);
+
 		switch (gamestate)
 		{
 		case start:
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
+				PlayMusicStream(loopMusic);
 				gamestate = play;
 			}
 			break;
@@ -78,16 +85,19 @@ namespace TapGamePlane
 			player1->Update();
 			if (IsKeyPressed(KEY_P))
 			{
+				PauseMusicStream(loopMusic);
 				gamestate = pause;
 			}
 			break;
 		case pause:
 			if (IsKeyPressed(KEY_P))
 			{
+				ResumeMusicStream(loopMusic);
 				gamestate = play;
 			}
 			break;
 		case lose:
+			StopMusicStream(loopMusic);
 			if (CheckCollisionPointRec(GetMousePosition(), goToMenuButtonCollider))
 			{
 				if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
@@ -98,7 +108,7 @@ namespace TapGamePlane
 				{
 					enumScenes = gameplayScene;
 					actualButtonState = up;
-					this->Restart();
+					Restart();
 					gamestate = start;
 					enumScenes = mainMenuScene;
 				}
@@ -159,6 +169,7 @@ namespace TapGamePlane
 	}
 	void gameplay::Deinitialization()
 	{
+		UnloadMusicStream(loopMusic);
 		UnloadTexture(backgroundTexture);
 		UnloadTexture(gameOverTexture);
 		UnloadTexture(getReadyTexture);
