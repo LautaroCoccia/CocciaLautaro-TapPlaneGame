@@ -27,6 +27,7 @@ namespace TapGamePlane
 	buttonState quitButtonState;
 	main_menu::main_menu()
 	{
+
 	}
 	main_menu::~main_menu()
 	{
@@ -34,6 +35,7 @@ namespace TapGamePlane
 	}
 	void main_menu::Start()
 	{
+
 		fontTtf = LoadFontEx("Assets/Font/kenvector_future.ttf", 32, 0, 250);
 		tittleTextPosition = { static_cast<float>(GetScreenWidth() / 7), static_cast<float>(GetScreenHeight() / 6) };
 		background = LoadTexture("Assets/UI/Background/background.png");
@@ -59,7 +61,7 @@ namespace TapGamePlane
 
 	void main_menu::Update()
 	{
-
+		
 		if (CheckCollisionPointRec(GetMousePosition(), playButtonCollider))
 		{
 			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
@@ -132,6 +134,9 @@ namespace TapGamePlane
 		DrawText("QUIT", static_cast<int>(GetScreenWidth() / 2) - 45, 320, 40, BLACK);
 		DrawText("PLAY", 350, 210, 40, BLACK);
 		DrawTextEx(fontTtf, "TAP PLANE GAME", tittleTextPosition, 60, 2, BLACK);
+		DrawText("v1.0", 1, static_cast<int>(GetScreenHeight() - 20), 20, BLACK);
+		DrawText("Tappy Plane assets, font & click sounds by Kenney. Coding & music: Lautaro Coccia ", static_cast<int>(GetScreenWidth() / 7), static_cast<int>(GetScreenHeight() - 25), 15, BLACK);
+
 	}
 	void main_menu::Deinitialization()
 	{

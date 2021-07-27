@@ -3,7 +3,6 @@
 
 #include "raylib.h"
 
-
 namespace TapGamePlane
 {
 	enum scenes
@@ -14,7 +13,8 @@ namespace TapGamePlane
 	};
 	extern scenes enumScenes;
 
-	class game_manager {
+	class game_manager
+	{
 
 	public:
 		game_manager();

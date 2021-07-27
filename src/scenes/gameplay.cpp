@@ -5,6 +5,7 @@
 #include "objects/game_manager.h"
 #include "objects/player.h"
 #include "objects/obstacles.h"
+#include "objects/sound_control.h"
 
 using namespace TapGamePlane;
 
@@ -95,6 +96,29 @@ namespace TapGamePlane
 				ResumeMusicStream(loopMusic);
 				gamestate = play;
 			}
+			if (CheckCollisionPointRec(GetMousePosition(), goToMenuButtonCollider))
+			{
+				if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+				{
+					actualButtonState = down;
+				}
+				else if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && actualButtonState == down)
+				{
+					StopMusicStream(loopMusic);
+					enumScenes = gameplayScene;
+					actualButtonState = up;
+					Restart();
+					gamestate = start;
+					enumScenes = mainMenuScene;
+				}
+				else
+				{
+					actualButtonState = mouseOver;
+				}
+			}
+			else
+				actualButtonState = up;
+
 			break;
 		case lose:
 			StopMusicStream(loopMusic);
@@ -131,17 +155,34 @@ namespace TapGamePlane
 		DrawTexture(backgroundTexture, 0, 0, WHITE);
 		obs->Draw();
 		player1->Draw();
+		DrawText("'P' to pause", 1, 0, 20, BLACK);
+
 		switch (gamestate)
 		{
 		case start:
 			DrawTexture(getReadyTexture, (GetScreenWidth() / 2 - getReadyTexture.width / 2), GetScreenHeight() / 6, WHITE);
-			DrawText("Tap to start!", 330, 300, 20, BLACK);
+			DrawText("click to start!", 330, 300, 20, BLACK);
 			break;
 		case play:
 			DrawText(FormatText("%i", player1->GetScore()), GetScreenWidth() / 2 - 10, GetScreenHeight() / 4, 40, BLACK);
 			break;
 		case pause:
 			DrawText("Pause!", GetScreenWidth() / 2, 200, 20, BLACK);
+			switch (actualButtonState)
+			{
+			case up:
+				DrawTexture(goToMenuButtonTexture, static_cast<int>(goToMenuButtonCollider.x), static_cast<int>(goToMenuButtonCollider.y), WHITE);
+				break;
+			case mouseOver:
+				DrawTexture(goToMenuButtonTexture, static_cast<int>(goToMenuButtonCollider.x), static_cast<int>(goToMenuButtonCollider.y), YELLOW);
+				break;
+			case down:
+				DrawTexture(goToMenuButtonTexture, static_cast<int>(goToMenuButtonCollider.x), static_cast<int>(goToMenuButtonCollider.y), BEIGE);
+				break;
+			default:
+				break;
+			}
+			DrawText("MAIN MENU!", (GetScreenWidth() / 2 - 90), static_cast<int>(goToMenuButtonCollider.y) + 15, 30, BLACK);
 			break;
 		case lose:
 			DrawText(FormatText("%i", player1->GetScore()), GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 20, 40, BLACK);

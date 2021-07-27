@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\objects\game_manager.cpp" />
     <ClCompile Include="..\src\objects\obstacles.cpp" />
     <ClCompile Include="..\src\objects\player.cpp" />
     <ClCompile Include="..\src\scenes\gameplay.cpp" />
-    <ClCompile Include="..\src\scenes\main.cpp" />
     <ClCompile Include="..\src\scenes\main_menu.cpp" />
   </ItemGroup>
   <ItemGroup>

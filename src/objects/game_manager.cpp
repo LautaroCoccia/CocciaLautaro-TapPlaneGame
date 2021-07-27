@@ -9,7 +9,6 @@ using namespace TapGamePlane;
 
 namespace TapGamePlane
 {
-
 	const int screenWidth = 800;
 	const int screenHeight = 450;
 	
@@ -51,7 +50,6 @@ namespace TapGamePlane
 		enumScenes = mainMenuScene;
 		actualMouseFrame = idle;
 		InitGame();
-		
 		while ( (enumScenes !=quitGame && !WindowShouldClose()))    // Detect window close button or ESC key
 		{
 			Update();
@@ -63,6 +61,7 @@ namespace TapGamePlane
 	{
 		enumScenes = newActivescene;
 	}
+	
 	void InitGame()
 	{
 		// Initialization
@@ -90,14 +89,13 @@ namespace TapGamePlane
 	
 		if ( IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 		{
-			PlaySound(mouseClickSound);
+				PlaySound(mouseClickSound);
 			actualMouseFrame = idle;
 		}
 		else if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			PlaySound(mouseReleaseSound);
+				PlaySound(mouseReleaseSound);
 			actualMouseFrame = click;
-
 		}
 		
 		switch (actualMouseFrame)
@@ -111,7 +109,6 @@ namespace TapGamePlane
 		default:
 			break;
 		}
-	
 		if (IsMouseOnScreen())
 			HideCursor();
 		else
@@ -119,7 +116,6 @@ namespace TapGamePlane
 		switch (enumScenes)
 		{
 		case mainMenuScene:
-	
 				mainMenu->Update();
 			break;
 		case gameplayScene:
@@ -147,9 +143,7 @@ namespace TapGamePlane
 		}
 		DrawTextureRec(mouseTexture, mouseFrameRec, mouseTexturePosition, WHITE);
 	
-		DrawText("v0.14", 1, static_cast<int>(GetScreenHeight() - 20), 20, BLACK);
-		DrawText("Tappy Plane assets, font & click sounds by Kenney", static_cast<int>(GetScreenWidth()/5), static_cast<int>(GetScreenHeight() - 25), 20, BLACK);
-	
+		
 		ClearBackground(RAYWHITE);
 	
 		EndDrawing();
@@ -157,6 +151,8 @@ namespace TapGamePlane
 	}
 	void Deinitialization()
 	{
+		// De-Initialization
+		//--------------------------------------------------------------------------------------
 		if (game != NULL)
 		{
 			game->Deinitialization();
@@ -170,27 +166,20 @@ namespace TapGamePlane
 		UnloadSound(mouseReleaseSound);
 		UnloadSound(mouseClickSound);
 		UnloadTexture(mouseTexture);
-
+		
 		CloseAudioDevice();
-		// De-Initialization
-		//--------------------------------------------------------------------------------------
 		CloseWindow();        // Close window and OpenGL context
 		//--------------------------------------------------------------------------------------
 	}
-	
 	Vector2 GetMousePos()
 	{
 		Vector2 mousePosVec = { GetMousePosition().x - mouseTexture.width / 2,
 			GetMousePosition().y - mouseTexture.height / 2 };
 		return mousePosVec;
 	}
-	
 	bool IsMouseOnScreen()
 	{
 		return ((GetMousePosition().x > 0 && GetMousePosition().x < GetScreenWidth()) &&
 			GetMousePosition().y > 0 && GetMousePosition().y < GetScreenHeight());
-			
-	
+	}
 }
-}
-

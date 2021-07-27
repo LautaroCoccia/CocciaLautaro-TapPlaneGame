@@ -16,14 +16,16 @@ namespace TapGamePlane
 	int playerSize = 40;
 
 	Texture2D playerTexture;
-
 	Rectangle frameRec;
+
+	Sound scoreSound;
 	int framesCounter = 0;
 	int currentFrame = 0;
 	int framesSpeed = 8;
 	void player::Start()
 	{
 		playerTexture = LoadTexture("Assets/UI/Plane/Plane.png");
+		scoreSound = LoadSound("Assets/Audio/ScoreSound/switch34.ogg");
 		playerTexture.height = playerTexture.height / 2;
 		playerTexture.width = playerTexture.width / 2;
 
@@ -73,9 +75,11 @@ namespace TapGamePlane
 	void player::UpdatePlayerScore()
 	{
 		score++;
+		PlaySound(scoreSound);
 	}
 	void player::Deinitialization()
 	{
+		UnloadSound(scoreSound);
 		UnloadTexture(playerTexture);
 	}
 	int player::GetScore()
