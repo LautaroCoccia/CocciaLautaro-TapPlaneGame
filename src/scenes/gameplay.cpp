@@ -5,7 +5,6 @@
 #include "objects/game_manager.h"
 #include "objects/player.h"
 #include "objects/obstacles.h"
-#include "objects/sound_control.h"
 
 using namespace TapGamePlane;
 

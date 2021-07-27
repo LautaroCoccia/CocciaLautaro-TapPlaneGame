@@ -27,7 +27,8 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-[Bb]in/
+[Bb]in
+![Ll]ib/raylib-2.5.0-Win32-msvc15/[Bb]in
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
