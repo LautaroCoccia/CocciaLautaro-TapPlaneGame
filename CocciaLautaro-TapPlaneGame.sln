@@ -5,12 +5,6 @@ VisualStudioVersion = 15.0.28307.1585
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TapPlaneGame", "TapPlaneGame\TapPlaneGame.vcxproj", "{CC46AFA7-6268-4B02-BDCD-5DE61BD5A24D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1EDB2082-A59C-4CE9-8E5A-8CC1CD9DF27F}"
-	ProjectSection(SolutionItems) = preProject
-		src\objects\obstacles.cpp = src\objects\obstacles.cpp
-		src\objects\obstacles.h = src\objects\obstacles.h
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
