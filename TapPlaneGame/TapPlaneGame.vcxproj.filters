@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{c334e3b5-afbb-4937-a20f-a13c8260290e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{8552ad8c-0ad0-44e4-9064-8d8ae2fccab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{a296fa1e-e099-47cb-90b8-d85467f8a28c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\objects\game_manager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scenes\main_menu.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scenes\gameplay.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\objects\obstacles.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\objects\player.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\objects\game_manager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scenes\main_menu.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scenes\gameplay.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\objects\obstacles.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\objects\player.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
