@@ -12,3 +12,7 @@ Kenny's assets license
   http://creativecommons.org/publicdomain/zero/1.0/
 
 music by Lautaro Coccia 
+
+Itch.io page
+
+https://lautarococcia.itch.io/tap-plane-game
